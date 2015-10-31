@@ -73,6 +73,17 @@ Router::scope('/', function ($routes) {
     $routes->fallbacks('DashedRoute');
 });
 
+Router::prefix('api', function($routes) {
+    /**
+     * we are add 'api' as a prefix for all url
+     */
+    $routes->extensions(['json','xml']);
+    $routes->resources('Users');
+    $routes->resources('Hierarchies');
+    $routes->resources('Dispositions');
+    $routes->fallbacks('InflectedRoute');
+});
+
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.
