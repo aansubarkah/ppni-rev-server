@@ -60,7 +60,7 @@ class DepartementsTable extends Table
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create');
 
-        $validator
+/*        $validator
             ->add('lft', 'valid', ['rule' => 'numeric'])
             ->requirePresence('lft', 'create')
             ->notEmpty('lft');
@@ -69,7 +69,7 @@ class DepartementsTable extends Table
             ->add('rght', 'valid', ['rule' => 'numeric'])
             ->requirePresence('rght', 'create')
             ->notEmpty('rght');
-
+ */
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
