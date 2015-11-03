@@ -19,10 +19,16 @@ class EvidencesTableTest extends TestCase
     public $fixtures = [
         'app.evidences',
         'app.users',
-        'app.letters',
-        'app.evidences_letters',
+        'app.groups',
         'app.dispositions',
-        'app.evidences_dispositions'
+        'app.letters',
+        'app.senders',
+        'app.vias',
+        'app.evidences_letters',
+        'app.recipients',
+        'app.evidences_dispositions',
+        'app.departements',
+        'app.departements_users'
     ];
 
     /**

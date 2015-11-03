@@ -9,7 +9,6 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $user_id
  * @property \App\Model\Entity\User $user
- * @property int $letter_id
  * @property string $name
  * @property string $extension
  * @property \Cake\I18n\Time $created

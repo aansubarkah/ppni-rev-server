@@ -13,6 +13,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $ParentDispositions
  * @property \Cake\ORM\Association\BelongsTo $Letters
  * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsTo $Recipients
  * @property \Cake\ORM\Association\HasMany $ChildDispositions
  * @property \Cake\ORM\Association\BelongsToMany $Evidences
  */
@@ -46,6 +47,10 @@ class DispositionsTable extends Table
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Recipients', [
+            'foreignKey' => 'recipient_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('ChildDispositions', [
@@ -82,11 +87,6 @@ class DispositionsTable extends Table
             ->notEmpty('rght');
 
         $validator
-            ->add('recipient', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('recipient', 'create')
-            ->notEmpty('recipient');
-
-        $validator
             ->requirePresence('content', 'create')
             ->notEmpty('content');
 
@@ -120,6 +120,7 @@ class DispositionsTable extends Table
         $rules->add($rules->existsIn(['parent_id'], 'ParentDispositions'));
         $rules->add($rules->existsIn(['letter_id'], 'Letters'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['recipient_id'], 'Recipients'));
         return $rules;
     }
 }

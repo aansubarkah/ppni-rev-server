@@ -102,8 +102,8 @@ class DepartementsController extends AppController {
             ];
         }
         $this->set([
-            'departements' => $departements,
-            '_serialize' => ['departements']
+            'hierarchies' => $departements,
+            '_serialize' => ['hierarchies']
         ]);
     }
 

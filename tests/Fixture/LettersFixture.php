@@ -50,10 +50,10 @@ class LettersFixture extends TestFixture
             'user_id' => 1,
             'via_id' => 1,
             'number' => 'Lorem ipsum dolor sit amet',
-            'date' => '2015-10-31',
+            'date' => '2015-11-03',
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2015-10-31 05:21:38',
-            'modified' => '2015-10-31 05:21:38',
+            'created' => '2015-11-03 06:53:28',
+            'modified' => '2015-11-03 06:53:28',
             'isread' => 1,
             'active' => 1
         ],

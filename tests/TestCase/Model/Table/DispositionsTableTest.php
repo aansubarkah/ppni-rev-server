@@ -19,9 +19,16 @@ class DispositionsTableTest extends TestCase
     public $fixtures = [
         'app.dispositions',
         'app.letters',
+        'app.senders',
         'app.users',
+        'app.groups',
         'app.evidences',
-        'app.evidences_dispositions'
+        'app.evidences_dispositions',
+        'app.evidences_letters',
+        'app.departements',
+        'app.departements_users',
+        'app.vias',
+        'app.recipients'
     ];
 
     /**

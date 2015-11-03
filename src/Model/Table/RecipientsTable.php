@@ -1,20 +1,18 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Evidence;
+use App\Model\Entity\Recipient;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Evidences Model
+ * Recipients Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\BelongsToMany $Dispositions
- * @property \Cake\ORM\Association\BelongsToMany $Letters
+ * @property \Cake\ORM\Association\HasMany $Dispositions
  */
-class EvidencesTable extends Table
+class RecipientsTable extends Table
 {
 
     /**
@@ -27,25 +25,10 @@ class EvidencesTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('evidences');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->table('recipients');
 
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsToMany('Dispositions', [
-            'foreignKey' => 'evidence_id',
-            'targetForeignKey' => 'disposition_id',
-            'joinTable' => 'evidences_dispositions'
-        ]);
-        $this->belongsToMany('Letters', [
-            'foreignKey' => 'evidence_id',
-            'targetForeignKey' => 'letter_id',
-            'joinTable' => 'evidences_letters'
+        $this->hasMany('Dispositions', [
+            'foreignKey' => 'recipient_id'
         ]);
     }
 
@@ -59,14 +42,16 @@ class EvidencesTable extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+            ->requirePresence('id', 'create')
+            ->notEmpty('id');
 
         $validator
-            ->allowEmpty('name');
+            ->requirePresence('username', 'create')
+            ->notEmpty('username');
 
         $validator
-            ->requirePresence('extension', 'create')
-            ->notEmpty('extension');
+            ->requirePresence('fullname', 'create')
+            ->notEmpty('fullname');
 
         $validator
             ->add('active', 'valid', ['rule' => 'boolean'])
@@ -85,7 +70,7 @@ class EvidencesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->isUnique(['username']));
         return $rules;
     }
 }
