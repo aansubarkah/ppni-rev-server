@@ -80,7 +80,13 @@ Router::prefix('api', function($routes) {
     $routes->extensions(['json','xml']);
     $routes->resources('Users');
     $routes->resources('Hierarchies');
-    $routes->resources('Dispositions');
+	$routes->resources('Dispositions');
+	$routes->resources('Departements');
+	$routes->resources('Vias');
+
+	//$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+	$routes->connect('/via', ['controller' => 'Vias']);
     $routes->fallbacks('InflectedRoute');
 });
 
