@@ -83,6 +83,7 @@ Router::prefix('api', function($routes) {
 	$routes->resources('Dispositions');
 	$routes->resources('Departements');
 	$routes->resources('Vias');
+	$routes->resources('Evidences');
 
 	//$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
