@@ -10,7 +10,8 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
-        "blueimp/jquery-file-upload": "*"
+        "blueimp/jquery-file-upload": "*",
+        "hashids/hashids": "^1.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",
@@ -24,7 +25,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src",
-            "UploadHandler\\": "./vendor/blueimp/jquery-file-upload/server/php/files/UploadHandler";
+            "UploadHandler\\": "./vendor/blueimp/jquery-file-upload/server/php/files/UploadHandler"
         }
     },
     "autoload-dev": {

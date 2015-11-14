@@ -16,6 +16,7 @@ namespace App\Controller\Api;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use \Hashids\Hashids;
 
 /**
  * Application Controller
@@ -28,36 +29,59 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
-    //public $components =['RequestHandler'];
+	/**
+	 * Hashids Settings
+	 *
+	 * @var array
+	 */
+	public $hashids = [
+		'salt' => '12025ac9ada2b3f443c1106f2a0f2f86e1fc0db4e63d9c02d1d402bbabf285d39dea2012',
+		'min_hash_length' => 8,
+		'alphabet' => 'abcdefghijklmnopqrstuvwxyz0123456789'
+	];
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
+	/**
+	 * Initialization hook method.
+	 *
+	 * Use this method to add common initialization code like loading components.
+	 *
+	 * e.g. `$this->loadComponent('Security');`
+	 *
+	 * @return void
+	 */
+	public function initialize()
+	{
+		parent::initialize();
 
-        $this->loadComponent('RequestHandler');
-    }
+		$this->loadComponent('RequestHandler');
+	}
 
-    /**
-     * Before render callback.
-     *
-     * @param \Cake\Event\Event $event The beforeRender event.
-     * @return void
-     */
-    public function beforeRender(Event $event)
-    {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
-            $this->set('_serialize', true);
-        }
-    }
+	/**
+	 * Before render callback.
+	 *
+	 * @param \Cake\Event\Event $event The beforeRender event.
+	 * @return void
+	 */
+	public function beforeRender(Event $event)
+	{
+		if (!array_key_exists('_serialize', $this->viewVars) &&
+			in_array($this->response->type(), ['application/json', 'application/xml'])
+		) {
+			$this->set('_serialize', true);
+		}
+	}
+
+	/**
+	 * Hashids function
+	 *
+	 * @return object
+	 **/
+	public function hashids()
+	{
+		return $hashids = new Hashids(
+			$this->hashids['salt'],
+			$this->hashids['min_hash_length'],
+			$this->hashids['alphabet']
+		);
+	}
 }
