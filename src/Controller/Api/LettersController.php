@@ -103,5 +103,15 @@ class LettersController extends AppController {
 			'letter' => $data,
 			'_serialize' => ['letter']
 		]);
-	}
+    }
+
+    public function add() {
+        if($this->request->is('post')) {
+            $letter = $this->Letters->newEntity($this->request->data['letter']);
+            $this->set([
+                'letter' => $letter,
+               '_serialize' => ['letter']
+            ]);
+        }
+    }
 }

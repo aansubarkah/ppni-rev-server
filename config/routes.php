@@ -41,6 +41,8 @@ use Cake\Routing\Router;
  */
 Router::defaultRouteClass('DashedRoute');
 
+Router::extensions(['json', 'xml']);
+
 Router::scope('/', function ($routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -77,13 +79,14 @@ Router::prefix('api', function($routes) {
     /**
      * we are add 'api' as a prefix for all url
      */
-    $routes->extensions(['json','xml']);
+    //$routes->extensions(['json','xml']);
     $routes->resources('Users');
     $routes->resources('Hierarchies');
 	$routes->resources('Dispositions');
 	$routes->resources('Departements');
 	$routes->resources('Vias');
 	$routes->resources('Evidences');
+	$routes->resources('Letters');
 
 	//$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
