@@ -57,4 +57,29 @@ class SendersTable extends Table
 
         return $validator;
     }
+
+    public function findAndSave($name) {
+        $idToReturn = 0;
+        $name = strtolower(trim($name));
+        $query = $this->find('all', [
+            'conditions' => ['Lower(name) LIKE' => '%' . $name . '%'],
+            'order' => ['name' => 'DESC']
+        ]);
+        $count = $query->count();
+        $row = $query->first();
+
+        // if record didn't exists, insert it, else use it
+        if($count < 1) {
+            $sender = $this->newEntity();
+            $sender->name = $name;
+
+            if($this->save($sender)) {
+                $idToReturn = $sender->id;
+            }
+        } else {
+            $idToReturn = $row->id;
+        }
+
+        return $idToReturn;
+    }
 }

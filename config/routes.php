@@ -80,7 +80,8 @@ Router::prefix('api', function($routes) {
      * we are add 'api' as a prefix for all url
      */
     //$routes->extensions(['json','xml']);
-    $routes->resources('Users');
+	$routes->resources('Users');
+	$routes->resources('Senders');
     $routes->resources('Hierarchies');
 	$routes->resources('Dispositions');
 	$routes->resources('Departements');
