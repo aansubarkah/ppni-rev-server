@@ -1,5 +1,8 @@
 <?php
 namespace App\Controller\Api;
+use Cake\I18n\I18n;//cakephp need this to save datetime field
+use Cake\I18n\Time;//cakephp need this to save datetime field
+use Cake\Database\Type;//cakephp need this to save datetime field
 
 use App\Controller\Api\AppController;
 
@@ -135,6 +138,13 @@ class LettersController extends AppController {
             unset($this->request->data['letter']['active']);
             unset($this->request->data['letter']['created']);
             unset($this->request->data['letter']['modified']);
+            $this->request->data['letter']['created'] = null;
+            $this->request->data['letter']['modified'] = null;
+            $this->request->data['letter']['active'] = true;
+
+            $date = date("Y-m-d", strtotime($this->request->data['letter']['date']));
+            Type::build('datetime')->useLocaleParser();//cakephp need this to save datetime field
+            $this->request->data['letter']['date'] = new Time($date);
 
             if($this->request->data['letter']['user_id'] === null) {
                 $errorMessages[] = 'Pengguna tidak sah';
@@ -164,6 +174,8 @@ class LettersController extends AppController {
                 $letter = $this->Letters->patchEntity($letter, $this->request->data['letter']);
                 if($this->Letters->save($letter)) {
                     $dataToReturn = 1;
+                } else {
+                    $dataToReturn = $letter;
                 }
             }
 
