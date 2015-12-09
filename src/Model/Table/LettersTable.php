@@ -15,6 +15,8 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Vias
  * @property \Cake\ORM\Association\HasMany $Dispositions
  * @property \Cake\ORM\Association\BelongsToMany $Evidences
+ * @property \Cake\ORM\Association\HasMany $EvidencesLetters
+ *
  */
 class LettersTable extends Table
 {
@@ -54,6 +56,9 @@ class LettersTable extends Table
             'foreignKey' => 'letter_id',
             'targetForeignKey' => 'evidence_id',
             'joinTable' => 'evidences_letters'
+        ]);
+        $this->hasMany('EvidencesLetters', [
+            'foreignKey' => 'letter_id'
         ]);
     }
 

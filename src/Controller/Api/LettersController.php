@@ -164,15 +164,14 @@ class LettersController extends AppController {
                 $errorMessages[] = 'Berkas harus sudah diunggah';
             }
 
-            //$letter = $this->Letters->newEntity($this->request->data['letter']);
-            //$letter = $this->request->data['letter'];
-            //$letter = $this->Letters->Senders->findAndSave($this->request->data['letter']['senderName']);
-
             if(count($errorMessages) > 0) {
                 $dataToReturn = $errorMessages;
             } else {
                 $letter = $this->Letters->patchEntity($letter, $this->request->data['letter']);
                 if($this->Letters->save($letter)) {
+                    $letterId = $letter->id;
+                    // save evidences table and rename file uploaded
+                    $this->Letters->Evidences->saveAndRenameLetterJoin($this->request->data['letter']['fileName'], 1, $letterId);
                     $dataToReturn = 1;
                 } else {
                     $dataToReturn = $letter;

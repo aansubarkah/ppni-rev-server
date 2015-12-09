@@ -6,6 +6,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Evidences Model
@@ -13,6 +15,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsToMany $Dispositions
  * @property \Cake\ORM\Association\BelongsToMany $Letters
+ * @property \Cake\ORM\Association\HasMany $EvidencesLetters
  */
 class EvidencesTable extends Table
 {
@@ -46,6 +49,9 @@ class EvidencesTable extends Table
             'foreignKey' => 'evidence_id',
             'targetForeignKey' => 'letter_id',
             'joinTable' => 'evidences_letters'
+        ]);
+        $this->hasMany('EvidencesLetters', [
+            'foreignKey' => 'evidence_id'
         ]);
     }
 
@@ -87,5 +93,39 @@ class EvidencesTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
+    }
+
+    public function saveAndRenameLetterJoin($filename, $userId, $letterId) {
+        $evidenceId = $this->saveAndRename($filename, $userId, 'Surat Masuk');
+        $evidenceLetter = $this->EvidencesLetters->newEntity();
+        $evidenceLetter->evidence_id = $evidenceId;
+        $evidenceLetter->letter_id = $letterId;
+
+        if($this->EvidencesLetters->save($evidenceLetter)) {
+            return 1;
+        }
+    }
+
+    private function saveAndRename($filename, $userId, $name) {
+        $evidence = $this->newEntity();
+        // find extension
+        $ext = strtolower(substr(strchr($filename, '.'), 1));
+
+        // data to save
+        $evidence->user_id = $userId;
+        $evidence->name = $name;
+        $evidence->extension = $ext;
+
+        if($this->save($evidence)) {
+            $evidenceId = $evidence->id;
+            // rename filename
+            $file = new File(WWW_ROOT . 'files' . DS . $filename);
+            $file->copy(WWW_ROOT . 'files' . DS . $evidenceId . '.' . $ext);
+            // delete original file
+            $file->delete();
+
+            return $evidenceId;
+            // @todo error handling if this process fail
+        }
     }
 }
